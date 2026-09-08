@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDJerseys - Catálogo 2026-2027</title>
+    <style>
+        /* Estilos Generales adaptados a los colores de la marca (Negro y Verde) */
+        :root {
+            --primary: #000000;
+            --accent: #00cc00; /* Verde brillante del logo */
+            --bg-color: #121212; /* Fondo oscuro */
+            --card-bg: #1e1e1e;
+            --text-dark: #f4f4f9;
+            --text-light: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        /* Navegación */
+        header {
+            background-color: var(--primary);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 4px 10px rgba(0, 204, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: bold;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+        }
+
+        .logo-container img {
+            height: 55px; /* Tamaño del logo ajustado */
+            margin-right: 15px;
+            border-radius: 8px; /* Bordes redondeados sutiles */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap; /* Para pantallas más pequeñas */
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Aviso Dinámicas */
+        .announcement {
+            background-color: var(--accent);
+            color: #000;
+            text-align: center;
+            padding: 12px;
+            font-weight: 900;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Secciones del Catálogo */
+        section {
+            padding: 3rem 5%;
+        }
+
+        h2.section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-transform: uppercase;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Tarjetas de Camisetas */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 204, 0, 0.15); /* Brillo verde sutil al pasar el mouse */
+            border-color: var(--accent);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-style: italic;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .click-notice {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .price-container {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #444;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .price-bcv {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* Ventanas Desplegables (Modals) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px); /* Efecto borroso de fondo */
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 30px rgba(0, 204, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: opacity 0.3s, transform 0.2s;
+        }
+
+        .contact-link:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .btn-ws { background-color: #25D366; color: #fff;}
+        .btn-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff;}
+        .btn-tk { background-color: #000000; border: 1px solid #444; color: #fff;}
+
+        /* Estilos Específicos del Modal de Producto */
+        #productTitle {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-details {
+            background-color: #111;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+
+        .product-details p {
+            margin: 12px 0;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-details strong {
+            color: var(--text-light);
+        }
+
+        .product-details span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .dorsal-notice {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            color: #ffc107;
+            font-size: 0.95rem;
+            text-align: left;
+            line-height: 1.5;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Responsive menu */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            nav ul { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado y Navegación -->
+    <header>
+        <a href="#" class="logo-container">
+            <!-- AQUÍ SE AGREGA TU LOGO -->
+            <img src="logo.png" alt="SDJerseys Logo">
+            SDJerseys
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#laliga">La Liga</a></li>
+                <li><a href="#premier">Premier League</a></li>
+                <li><a href="#bundesliga">Bundesliga</a></li>
+                <li><a href="#ligue1">Ligue 1</a></li>
+                <li><a onclick="openContactModal()">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Aviso Dinámicas -->
+    <div class="announcement">
+        ¡Atención! Mantente pendiente de nuestras redes sociales, realizaremos dinámicas mensuales con grandes premios.
+    </div>
+
+    <!-- Sección La Liga -->
+    <section id="laliga">
+        <h2 class="section-title">La Liga 26/27</h2>
+        <div class="grid">
+            <div class="card" onclick="openProductModal('Real Madrid - Local')">
+                <div class="card-img" style="background-image: url('madridl.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Real Madrid - Local</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" onclick="openProductModal('FC Barcelona - Local')">
+                <div class="card-img" style="background-image: url('barcal.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">FC Barcelona - Local</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Premier League -->
+    <section id="premier">
+        <h2 class="section-title">Premier League 26/27</h2>
+        <div class="grid">
+            <div class="card" onclick="openProductModal('Manchester City - Local')">
+                <div class="card-img" style="background-image: url('mancityl.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Manchester City - Local</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" onclick="openProductModal('Arsenal - Local')">
+                <div class="card-img" style="background-image: url('arsenall.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Arsenal - Local</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Bundesliga -->
+    <section id="bundesliga">
+        <h2 class="section-title">Bundesliga 26/27</h2>
+        <div class="grid">
+            <div class="card" onclick="openProductModal('Bayern Munich - Local')">
+                <div class="card-img" style="background-image: url('bayernl.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Bayern Munich - Local</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Ligue 1 (NUEVA) -->
+    <section id="ligue1">
+        <h2 class="section-title">Ligue 1 26/27</h2>
+        <div class="grid">
+            <div class="card" onclick="openProductModal('Paris Saint-Germain - Visitante')">
+                <div class="card-img" style="background-image: url('psgv.jfif'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+                <div class="card-content">
+                    <h3 class="card-title">Paris Saint-Germain - Visitante</h3>
+                    <div class="click-notice">👆 Clic para ver tallas y pedir</div>
+                    <div class="price-container">
+                        <div class="price">23$ Divisas</div>
+                        <div class="price-bcv">25$ a tasa BCV</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ventana Desplegable (Modal) - CONTACTO -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeContactModal()">&times;</span>
+            <h3 style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.5rem;">¡Contáctanos!</h3>
+            <p style="margin-bottom: 25px; font-size: 0.95rem; color: #aaa;">Haz tu pedido o síguenos para participar en nuestras dinámicas.</p>
+            
+            <a href="https://wa.me/584163403334" target="_blank" class="contact-link btn-ws">
+                📱 Escríbenos al WhatsApp
+            </a>
+            <a href="https://www.instagram.com/sdjer6/" target="_blank" class="contact-link btn-ig">
+                📸 Síguenos en Instagram
+            </a>
+            <a href="https://www.tiktok.com/@sdjer6_" target="_blank" class="contact-link btn-tk">
+                🎵 Síguenos en TikTok
+            </a>
+        </div>
+    </div>
+
+    <!-- Ventana Desplegable (Modal) - DETALLES DEL PRODUCTO -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeProductModal()">&times;</span>
+            <h3 id="productTitle">Nombre Camiseta</h3>
+            
+            <div class="product-details">
+                <p><strong>Tallas:</strong> <span>S - M - L - XL</span></p>
+                <p><strong>Divisas:</strong> <span>23$</span></p>
+                <p><strong>Tasa BCV:</strong> <span>25$</span></p>
+            </div>
+            
+            <div class="dorsal-notice">
+                ⚠️ <strong>Aviso Importante:</strong><br>
+                Por favor, recuerde consultar la disponibilidad de los dorsales (nombre y número) al momento de realizar su pedido con nosotros.
+            </div>
+            
+            <div style="margin-top: 25px;">
+                <a id="whatsappOrderBtn" href="https://wa.me/584163403334" target="_blank" class="contact-link btn-ws" style="font-size: 1.1rem; padding: 15px;">
+                    🛒 Hacer pedido al WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts para interactividad -->
+    <script>
+        // Funciones Modal Contacto
+        const contactModal = document.getElementById('contactModal');
+        function openContactModal() {
+            contactModal.style.display = 'flex';
+        }
+        function closeContactModal() {
+            contactModal.style.display = 'none';
+        }
+
+        // Funciones Modal Producto
+        const productModal = document.getElementById('productModal');
+        const productTitle = document.getElementById('productTitle');
+        const whatsappOrderBtn = document.getElementById('whatsappOrderBtn');
+        
+        function openProductModal(jerseyName) {
+            productTitle.innerText = jerseyName;
+            
+            // Personaliza el mensaje de WhatsApp según la camiseta cliqueada
+            const message = encodeURIComponent(`¡Hola! Estoy interesado en la camiseta: ${jerseyName}. Quisiera saber disponibilidad y detalles del dorsal.`);
+            whatsappOrderBtn.href = `https://wa.me/584163403334?text=${message}`;
+            
+            productModal.style.display = 'flex';
+        }
+        function closeProductModal() {
+            productModal.style.display = 'none';
+        }
+
+        // Cerrar al hacer clic en el fondo oscuro
+        window.onclick = function(event) {
+            if (event.target == contactModal) {
+                closeContactModal();
+            }
+            if (event.target == productModal) {
+                closeProductModal();
+            }
+        }
+    </script>
+</body>
+</html>
